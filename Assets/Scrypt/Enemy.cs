@@ -11,23 +11,28 @@ public class Enemy : MonoBehaviour
 
     private int _napravl = 0;
 
+    private int[] _raz = { 0, 90, 180, 270 };
+
+    private void Start()
+    {
+        transform.Rotate(0,0, _raz[Random.Range(0,_raz.Length)]);
+    }
+
     private void Update()
     {
-        switch (_napravl)
-        {
-            case 0:
-                transform.position += new Vector3(1, 0, 0) * _speed * Time.deltaTime;
-                break;
-            case 1:
-                transform.position += new Vector3(-1, 0, 0) * _speed * Time.deltaTime;
-                break;
-            case 2:
-                transform.position += new Vector3(0, 1, 0) * _speed * Time.deltaTime;
-                break;
-            case 3:
-                transform.position += new Vector3(0, -1, 0) * _speed * Time.deltaTime;
-                break;
+        transform.Translate(new Vector3(_speed * Time.deltaTime, 0, 0));
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, transform.right, 1, LayerMask.GetMask("sss"));
 
+       
+
+        if (hit.collider == null)
+        {
+            return;
+        }
+        Debug.Log(hit.collider.gameObject);
+        if (hit.collider.gameObject.GetComponent<Player>() == false && hit.collider.gameObject.GetComponent<Ochko>() == false && hit.collider.gameObject != gameObject)
+        {
+            transform.Rotate(0, 0, 90);
         }
     }
 

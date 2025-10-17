@@ -79,7 +79,7 @@ public class Player : MonoBehaviour
     {
         if (collision.gameObject.GetComponent<Ochko>())
         {
-            _ochko++;
+            _ochko += collision.gameObject.GetComponent<Ochko>().Ochkos;
             _textOchko.text = _ochko.ToString();
             if (_ochko >= 128)
             {
